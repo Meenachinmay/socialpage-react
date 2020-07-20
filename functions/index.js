@@ -21,6 +21,8 @@ firebase.initializeApp(config)
 
 const db = admin.firestore();
 
+const { addUserDetails, getAuthenticatedUser } = require('./handlers/users');
+
 //　もう作ったスーキルムを探して、もらうべく
 app.get('/screams', (req, res) => {
     db
@@ -192,7 +194,7 @@ app.post('/login', (req, res) => {
         })
 });
 
-
+// Upload the image
 app.post('/user/image', FBAuth,(req, res) => {
     const BusBoy = require('busboy');
     const path = require('path');
@@ -241,5 +243,10 @@ app.post('/user/image', FBAuth,(req, res) => {
     });
     busboy.end(req.rawBody);
 });
+
+// add user details
+app.post('/user', FBAuth, addUserDetails);
+// get authenticated user
+app.get('/user', FBAuth, getAuthenticatedUser);
 
 exports.api = functions.region('us-central1').https.onRequest(app);
