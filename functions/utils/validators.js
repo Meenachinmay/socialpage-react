@@ -1,7 +1,4 @@
-const isEmpty = (string) => {
-    if (string.trim() === '') return true;
-    else return false;
-}
+const { isEmpty } = require('./validationFunctions');
 
 // export the userDetails
 exports.reduceUserDetails = (data) => {
